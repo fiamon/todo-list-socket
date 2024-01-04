@@ -36,3 +36,6 @@ lerna-debug.log*
 
 .env
 
+db_database.txt
+db_password.txt
+db_username.txt

@@ -1,0 +1,20 @@
+version: '3.1'
+
+services:
+  db:
+    image:  postgres
+    ports:
+      - "5432:5432"
+    environment:
+      - POSTGRES_USER=db_username
+      - POSTGRES_PASSWORD=db_password
+      - POSTGRES_DB=todo-list-db
+    secrets:
+      - db_username
+      - db_password
+
+secrets:
+  db_password:
+    file: db_password.txt
+  db_username:
+    file: db_username.txt
