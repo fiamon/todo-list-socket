@@ -1,4 +1,3 @@
-import { IsEmail, Length } from 'class-validator';
 import {
   BeforeInsert,
   BeforeUpdate,
@@ -6,9 +5,14 @@ import {
   CreateDateColumn,
   Entity,
   Index,
+  JoinTable,
+  ManyToMany,
+  OneToMany,
   PrimaryGeneratedColumn,
 } from 'typeorm';
 import * as bcrypt from 'bcrypt';
+import { Task } from 'src/board/entities/task.entity';
+import { Board } from 'src/board/entities/board.entity';
 
 @Entity()
 export class User {
@@ -16,17 +20,21 @@ export class User {
   id: string;
 
   @Column()
-  @IsEmail()
   @Index({ unique: true })
   email: string;
 
   @Column()
-  @Length(8, 60)
   password: string;
 
   @Column()
-  @Length(3, 100)
-  fullName: string;
+  full_name: string;
+
+  @OneToMany(() => Task, (task) => task.assigned_user_id)
+  tasks: Task[];
+
+  @ManyToMany(() => Board, (board) => board.users)
+  @JoinTable()
+  boards: Board[];
 
   @CreateDateColumn({ type: 'timestamp' })
   created_at: Date;
