@@ -6,6 +6,7 @@ import {
   Request,
   Get,
   Param,
+  Put,
 } from '@nestjs/common';
 import { BoardService } from './board.service';
 import { CreateBoardDto } from './dto/create-board.dto';
@@ -28,9 +29,12 @@ export class BoardController {
     return this.boardService.findTodosByBoardId(id);
   }
 
-  @Post(':id/invite')
+  @Put(':id/invite/:email')
   @UseGuards(AuthGuard)
-  invitePeopleToBoard(@Body() email: string, @Param('id') boardId: string) {
+  invitePeopleToBoard(
+    @Param('email') email: string,
+    @Param('id') boardId: string,
+  ) {
     return this.boardService.invitePeopleToBoard(email, boardId);
   }
 }
