@@ -1,34 +1,36 @@
-import { Controller, Get, Post, Body, Patch, Param, Delete } from '@nestjs/common';
+import {
+  Controller,
+  Post,
+  Body,
+  UseGuards,
+  Request,
+  Get,
+  Param,
+} from '@nestjs/common';
 import { BoardService } from './board.service';
 import { CreateBoardDto } from './dto/create-board.dto';
-import { UpdateBoardDto } from './dto/update-board.dto';
+import { AuthGuard } from 'src/auth/auth.guard';
 
 @Controller('board')
 export class BoardController {
   constructor(private readonly boardService: BoardService) {}
 
-  @Post()
-  create(@Body() createBoardDto: CreateBoardDto) {
-    return this.boardService.create(createBoardDto);
-  }
-
-  @Get()
-  findAll() {
-    return this.boardService.findAll();
+  @Post('create')
+  @UseGuards(AuthGuard)
+  create(@Body() createBoardDto: CreateBoardDto, @Request() req) {
+    const user = req.user;
+    return this.boardService.create(createBoardDto, user);
   }
 
   @Get(':id')
-  findOne(@Param('id') id: string) {
-    return this.boardService.findOne(+id);
+  @UseGuards(AuthGuard)
+  findTodosByBoardId(@Param('id') id: string) {
+    return this.boardService.findTodosByBoardId(id);
   }
 
-  @Patch(':id')
-  update(@Param('id') id: string, @Body() updateBoardDto: UpdateBoardDto) {
-    return this.boardService.update(+id, updateBoardDto);
-  }
-
-  @Delete(':id')
-  remove(@Param('id') id: string) {
-    return this.boardService.remove(+id);
+  @Post(':id/invite')
+  @UseGuards(AuthGuard)
+  invitePeopleToBoard(@Body() email: string, @Param('id') boardId: string) {
+    return this.boardService.invitePeopleToBoard(email, boardId);
   }
 }

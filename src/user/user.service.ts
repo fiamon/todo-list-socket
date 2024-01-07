@@ -17,11 +17,9 @@ export class UserService {
         email: createUserDto.email,
       },
     });
-
     if (doesUserAlreadyExists) {
       throw new HttpException('User already exists', 400);
     }
-
     const user = this.usersRepository.create(createUserDto);
     await this.usersRepository.save(user);
   }
@@ -34,11 +32,9 @@ export class UserService {
     const user = await this.usersRepository.findOne({
       where: { id },
     });
-
     if (!user) {
       throw new HttpException('User not found', 404);
     }
-
     return user;
   }
 
@@ -49,7 +45,16 @@ export class UserService {
     if (!user) {
       throw new HttpException('User not found', 404);
     }
-
     return user;
+  }
+
+  async getAssosietedBoards(id: string) {
+    const boards = await this.usersRepository.find({
+      where: { id },
+      relations: {
+        boards: true,
+      },
+    });
+    return boards;
   }
 }

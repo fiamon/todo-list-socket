@@ -20,4 +20,9 @@ export class UserController {
   findOne(@Param('id') id: string) {
     return this.userService.findOne(id);
   }
+
+  @Get('boards/:id')
+  getAssosietedBoards(@Param('id') id: string) {
+    return this.userService.getAssosietedBoards(id);
+  }
 }
