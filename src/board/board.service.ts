@@ -7,6 +7,7 @@ import { Task } from './entities/task.entity';
 import { Board } from './entities/board.entity';
 import { socketEvent } from 'src/externals/pusher/pusher.socket';
 import { sendMail } from 'src/externals/mailer/send-email';
+import { CreateTaskDTO } from './dto/create-task.dto';
 
 @Injectable()
 export class BoardService {
@@ -27,7 +28,7 @@ export class BoardService {
       where: { id: user.id },
     });
     board.users = [owner];
-    socketEvent(`updateTasks-${board.title}`, 'new-task', {
+    socketEvent(`updateTasks-${board.title}`, 'new-board', {
       message: 'hello',
     });
     await this.boardRepository.save(board);
@@ -62,5 +63,15 @@ export class BoardService {
     });
     board.users = [...board.users, user];
     sendMail(email);
+  }
+
+  async createTask(createTaskDTO: CreateTaskDTO) {
+    const task = this.taskRepository.create(createTaskDTO);
+    console.log(task);
+    await this.taskRepository.save(task);
+
+    socketEvent(`updateTasks-${task.assigned_board_id.title}`, 'newTask', {
+      newTask: task,
+    });
   }
 }

@@ -7,10 +7,13 @@ import {
   Get,
   Param,
   Put,
+  Patch,
 } from '@nestjs/common';
 import { BoardService } from './board.service';
 import { CreateBoardDto } from './dto/create-board.dto';
 import { AuthGuard } from 'src/auth/auth.guard';
+import { CreateTaskDTO } from './dto/create-task.dto';
+import { UpdateTaskDto } from './dto/update-task.dto';
 
 @Controller('board')
 export class BoardController {
@@ -37,4 +40,12 @@ export class BoardController {
   ) {
     return this.boardService.invitePeopleToBoard(email, boardId);
   }
+
+  @Post('task')
+  @UseGuards(AuthGuard)
+  createTask(@Body() createTaskDTO: CreateTaskDTO) {
+    return this.boardService.createTask(createTaskDTO);
+  }
+
+
 }
