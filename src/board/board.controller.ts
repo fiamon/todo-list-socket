@@ -47,5 +47,11 @@ export class BoardController {
     return this.boardService.createTask(createTaskDTO);
   }
 
-
+  @Patch('task/:id')
+  updateTask(
+    @Body() updateTaskDto: UpdateTaskDto,
+    @Param(':id') taskId: string,
+  ) {
+    return this.boardService.updateTask(taskId, updateTaskDto.status);
+  }
 }

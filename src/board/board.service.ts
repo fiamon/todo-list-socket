@@ -74,4 +74,19 @@ export class BoardService {
       newTask: task,
     });
   }
+
+  async updateTask(taskId: string, status: string) {
+    const task = await this.taskRepository.findOne({
+      where: { id: taskId },
+    });
+    task.status = status;
+    await this.taskRepository.save(task);
+
+    socketEvent(`updateTasks-${task.assigned_board_id.title}`, 'updateTask', {
+      taskId: task.id,
+      task,
+    });
+
+    return task;
+  }
 }
