@@ -89,4 +89,18 @@ export class BoardService {
 
     return task;
   }
+
+  async deleteTask(taskID: string) {
+    const task = await this.taskRepository.findOne({
+      where: { id: taskID },
+      relations: { assigned_board_id: true },
+    });
+    if (task) {
+      socketEvent(`updateTasks-${task.assigned_board_id.title}`, 'deleteTask', {
+        taskId: task.id,
+        task,
+      });
+      await this.taskRepository.remove(task);
+    }
+  }
 }

@@ -8,6 +8,7 @@ import {
   Param,
   Put,
   Patch,
+  Delete,
 } from '@nestjs/common';
 import { BoardService } from './board.service';
 import { CreateBoardDto } from './dto/create-board.dto';
@@ -48,10 +49,17 @@ export class BoardController {
   }
 
   @Patch('task/:id')
+  @UseGuards(AuthGuard)
   updateTask(
     @Body() updateTaskDto: UpdateTaskDto,
     @Param(':id') taskId: string,
   ) {
     return this.boardService.updateTask(taskId, updateTaskDto.status);
+  }
+
+  @Delete('task/:id')
+  // @UseGuards(AuthGuard)
+  deleteTask(@Param('id') taskId: string) {
+    return this.boardService.deleteTask(taskId);
   }
 }
