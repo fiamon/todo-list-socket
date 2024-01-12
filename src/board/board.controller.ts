@@ -27,6 +27,13 @@ export class BoardController {
     return this.boardService.create(createBoardDto, user);
   }
 
+  @Get()
+  @UseGuards(AuthGuard)
+  findAllBoards(@Request() req) {
+    const user = req.user;
+    return this.boardService.findBoardsAssignedToUser(user);
+  }
+
   @Get(':id')
   @UseGuards(AuthGuard)
   findTodosByBoardId(@Param('id') id: string) {
