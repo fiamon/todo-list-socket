@@ -23,14 +23,14 @@ export class BoardController {
   @Post('create')
   @UseGuards(AuthGuard)
   create(@Body() createBoardDto: CreateBoardDto, @Request() req) {
-    const user = req.user;
+    const user = req.user.sub;
     return this.boardService.create(createBoardDto, user);
   }
 
   @Get()
   @UseGuards(AuthGuard)
   findAllBoards(@Request() req) {
-    const user = req.user;
+    const user = req.user.sub;
     return this.boardService.findBoardsAssignedToUser(user);
   }
 
@@ -65,7 +65,7 @@ export class BoardController {
   }
 
   @Delete('task/:id')
-  // @UseGuards(AuthGuard)
+  @UseGuards(AuthGuard)
   deleteTask(@Param('id') taskId: string) {
     return this.boardService.deleteTask(taskId);
   }

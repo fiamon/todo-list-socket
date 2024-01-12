@@ -22,10 +22,10 @@ export class BoardService {
     private boardRepository: Repository<Board>,
   ) {}
 
-  async create(createBoardDto: CreateBoardDto, user: User) {
+  async create(createBoardDto: CreateBoardDto, user: string) {
     const board = this.boardRepository.create(createBoardDto);
     const owner = await this.userRepository.findOne({
-      where: { id: user.id },
+      where: { id: user },
     });
     board.users = [owner];
     socketEvent(`updateTasks-${board.id}`, 'new-board', {
