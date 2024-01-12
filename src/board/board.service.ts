@@ -28,10 +28,11 @@ export class BoardService {
       where: { id: user.id },
     });
     board.users = [owner];
-    socketEvent(`updateTasks-${board.title}`, 'new-board', {
+    socketEvent(`updateTasks-${board.id}`, 'new-board', {
       message: 'hello',
     });
     await this.boardRepository.save(board);
+    return board;
   }
 
   async findTodosByBoardId(id: string) {
@@ -102,5 +103,15 @@ export class BoardService {
       });
       await this.taskRepository.remove(task);
     }
+  }
+
+  async findBoardsAssignedToUser(user: string) {
+    const boards = await this.userRepository.findOne({
+      where: { id: user },
+      relations: {
+        boards: true,
+      },
+    });
+    return boards;
   }
 }
