@@ -38,14 +38,12 @@ export class BoardService {
   async findTodosByBoardId(id: string) {
     const findedBoard = await this.boardRepository.findOne({
       where: { id },
-    });
-    const tasks = await this.taskRepository.find({
-      where: {
-        assigned_board_id: findedBoard,
+      relations: {
+        tasks: true,
       },
     });
 
-    return tasks;
+    return findedBoard;
   }
 
   async invitePeopleToBoard(email: string, boardId: string) {
@@ -64,6 +62,14 @@ export class BoardService {
     });
     board.users = [...board.users, user];
     sendMail(email);
+  }
+
+  async deleteBoard(boardId: string) {
+    const board = await this.boardRepository.findOne({
+      where: { id: boardId },
+    });
+
+    await this.boardRepository.remove(board);
   }
 
   async createTask(createTaskDTO: CreateTaskDTO) {

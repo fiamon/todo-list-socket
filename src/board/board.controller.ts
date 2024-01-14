@@ -40,6 +40,12 @@ export class BoardController {
     return this.boardService.findTodosByBoardId(id);
   }
 
+  @Delete(':id')
+  @UseGuards(AuthGuard)
+  deleteBoard(@Param('id') boardId: string) {
+    return this.boardService.deleteBoard(boardId);
+  }
+
   @Put(':id/invite/:email')
   @UseGuards(AuthGuard)
   invitePeopleToBoard(
