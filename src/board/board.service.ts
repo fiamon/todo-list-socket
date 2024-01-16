@@ -40,6 +40,7 @@ export class BoardService {
       where: { id },
       relations: {
         tasks: true,
+        users: true,
       },
     });
 
