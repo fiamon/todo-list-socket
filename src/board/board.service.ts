@@ -39,11 +39,12 @@ export class BoardService {
     const findedBoard = await this.boardRepository.findOne({
       where: { id },
       relations: {
-        tasks: true,
+        tasks: {
+          assigned_user_id: true,
+        },
         users: true,
       },
     });
-
     return findedBoard;
   }
 
@@ -75,7 +76,6 @@ export class BoardService {
 
   async createTask(createTaskDTO: CreateTaskDTO) {
     const task = this.taskRepository.create(createTaskDTO);
-    console.log(task);
     await this.taskRepository.save(task);
 
     socketEvent(`updateTasks-${task.assigned_board_id.title}`, 'newTask', {
