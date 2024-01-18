@@ -25,7 +25,7 @@ export class Task {
   @ManyToOne(() => User, (user) => user.tasks, { onDelete: 'SET NULL' })
   assigned_user_id: User;
 
-  @ManyToOne(() => Board, (board) => board.tasks)
+  @ManyToOne(() => Board, (board) => board.tasks, { onDelete: 'CASCADE' })
   assigned_board_id: Board;
 
   @CreateDateColumn()

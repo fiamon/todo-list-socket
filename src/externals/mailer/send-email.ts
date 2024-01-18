@@ -12,8 +12,8 @@ export async function sendMail(receiverEmail: string) {
   mailOptions.to = receiverEmail;
   transporter.sendMail(mailOptions, function (error, info) {
     if (error) {
-      console.log(error);
+      return error;
     }
-    console.log(info);
+    return info;
   });
 }
