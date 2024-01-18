@@ -28,9 +28,6 @@ export class BoardService {
       where: { id: user },
     });
     board.users = [owner];
-    socketEvent(`updateTasks-${board.id}`, 'new-board', {
-      message: 'hello',
-    });
     await this.boardRepository.save(board);
     return board;
   }
@@ -78,8 +75,16 @@ export class BoardService {
     const task = this.taskRepository.create(createTaskDTO);
     await this.taskRepository.save(task);
 
-    socketEvent(`updateTasks-${task.assigned_board_id.title}`, 'newTask', {
-      newTask: task,
+    const user = await this.taskRepository.findOne({
+      where: { id: task.id },
+      relations: {
+        assigned_user_id: true,
+      },
+    });
+
+    socketEvent(`updateTasks-${task.assigned_board_id}`, 'newTask', {
+      task,
+      user,
     });
   }
 
@@ -91,7 +96,6 @@ export class BoardService {
     await this.taskRepository.save(task);
 
     socketEvent(`updateTasks-${task.assigned_board_id.title}`, 'updateTask', {
-      taskId: task.id,
       task,
     });
 
