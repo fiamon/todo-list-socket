@@ -29,6 +29,9 @@ export class BoardService {
     });
     board.users = [owner];
     await this.boardRepository.save(board);
+    socketEvent(`updateTasks-${board.id}`, 'newBoard', {
+      board,
+    });
     return board;
   }
 
@@ -59,7 +62,9 @@ export class BoardService {
         users: true,
       },
     });
+
     board.users = [...board.users, user];
+    await this.boardRepository.save(board);
     sendMail(email);
   }
 
@@ -91,14 +96,16 @@ export class BoardService {
   async updateTask(taskId: string, status: string) {
     const task = await this.taskRepository.findOne({
       where: { id: taskId },
+      relations: {
+        assigned_user_id: true,
+      },
     });
     task.status = status;
     await this.taskRepository.save(task);
-
-    socketEvent(`updateTasks-${task.assigned_board_id.title}`, 'updateTask', {
+    console.log(task);
+    socketEvent(`updateTasks-${task.assigned_board_id}`, 'updateTask', {
       task,
     });
-
     return task;
   }
 

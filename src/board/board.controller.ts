@@ -46,11 +46,11 @@ export class BoardController {
     return this.boardService.deleteBoard(boardId);
   }
 
-  @Put(':id/invite/:email')
+  @Put('/invite/:id')
   @UseGuards(AuthGuard)
   invitePeopleToBoard(
-    @Param('email') email: string,
     @Param('id') boardId: string,
+    @Body('email') email: string,
   ) {
     return this.boardService.invitePeopleToBoard(email, boardId);
   }
