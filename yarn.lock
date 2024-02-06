@@ -1000,7 +1000,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@nestjs/mapped-types@npm:*":
+"@nestjs/mapped-types@npm:*, @nestjs/mapped-types@npm:2.0.4":
   version: 2.0.4
   resolution: "@nestjs/mapped-types@npm:2.0.4"
   peerDependencies:
@@ -1045,6 +1045,33 @@ __metadata:
   peerDependencies:
     typescript: ">=4.8.2"
   checksum: d63962581826025e41c9c66874ecc788cf19f7df35c6ba943c46d11a929896516b9b365b6387e9c071138b592a4172628207b63bbd684e6d8f9ec97cff4af1e9
+  languageName: node
+  linkType: hard
+
+"@nestjs/swagger@npm:^7.2.0":
+  version: 7.2.0
+  resolution: "@nestjs/swagger@npm:7.2.0"
+  dependencies:
+    "@nestjs/mapped-types": "npm:2.0.4"
+    js-yaml: "npm:4.1.0"
+    lodash: "npm:4.17.21"
+    path-to-regexp: "npm:3.2.0"
+    swagger-ui-dist: "npm:5.11.0"
+  peerDependencies:
+    "@fastify/static": ^6.0.0
+    "@nestjs/common": ^9.0.0 || ^10.0.0
+    "@nestjs/core": ^9.0.0 || ^10.0.0
+    class-transformer: "*"
+    class-validator: "*"
+    reflect-metadata: ^0.1.12
+  peerDependenciesMeta:
+    "@fastify/static":
+      optional: true
+    class-transformer:
+      optional: true
+    class-validator:
+      optional: true
+  checksum: 8ab005ec5681f70708852ff45ac4bc74c0006c2cccc66ef0d9dc9251371286eeff5c61b7df5ce7665e066b41a47e96491880c930bc2f1e1cda53bf71bfb020fc
   languageName: node
   linkType: hard
 
@@ -4986,6 +5013,17 @@ __metadata:
   languageName: node
   linkType: hard
 
+"js-yaml@npm:4.1.0, js-yaml@npm:^4.1.0":
+  version: 4.1.0
+  resolution: "js-yaml@npm:4.1.0"
+  dependencies:
+    argparse: "npm:^2.0.1"
+  bin:
+    js-yaml: bin/js-yaml.js
+  checksum: 184a24b4eaacfce40ad9074c64fd42ac83cf74d8c8cd137718d456ced75051229e5061b8633c3366b8aada17945a7a356b337828c19da92b51ae62126575018f
+  languageName: node
+  linkType: hard
+
 "js-yaml@npm:^3.13.1":
   version: 3.14.1
   resolution: "js-yaml@npm:3.14.1"
@@ -4995,17 +5033,6 @@ __metadata:
   bin:
     js-yaml: bin/js-yaml.js
   checksum: 6746baaaeac312c4db8e75fa22331d9a04cccb7792d126ed8ce6a0bbcfef0cedaddd0c5098fade53db067c09fe00aa1c957674b4765610a8b06a5a189e46433b
-  languageName: node
-  linkType: hard
-
-"js-yaml@npm:^4.1.0":
-  version: 4.1.0
-  resolution: "js-yaml@npm:4.1.0"
-  dependencies:
-    argparse: "npm:^2.0.1"
-  bin:
-    js-yaml: bin/js-yaml.js
-  checksum: 184a24b4eaacfce40ad9074c64fd42ac83cf74d8c8cd137718d456ced75051229e5061b8633c3366b8aada17945a7a356b337828c19da92b51ae62126575018f
   languageName: node
   linkType: hard
 
@@ -5256,7 +5283,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"lodash@npm:^4.17.21":
+"lodash@npm:4.17.21, lodash@npm:^4.17.21":
   version: 4.17.21
   resolution: "lodash@npm:4.17.21"
   checksum: d8cbea072bb08655bb4c989da418994b073a608dffa608b09ac04b43a791b12aeae7cd7ad919aa4c925f33b48490b5cfe6c1f71d827956071dae2e7bb3a6b74c
@@ -7150,6 +7177,13 @@ __metadata:
   languageName: node
   linkType: hard
 
+"swagger-ui-dist@npm:5.11.0":
+  version: 5.11.0
+  resolution: "swagger-ui-dist@npm:5.11.0"
+  checksum: f57c7b5fcd7360ee068ba8e36d0c08a3f5158b17dfcb43541b888d07a39a6b4631768f1be3a792c40d3670ef662dbc97b553285788c358cf2bf5b0e75ed58b00
+  languageName: node
+  linkType: hard
+
 "symbol-observable@npm:4.0.0":
   version: 4.0.0
   resolution: "symbol-observable@npm:4.0.0"
@@ -7310,6 +7344,7 @@ __metadata:
     "@nestjs/mapped-types": "npm:*"
     "@nestjs/platform-express": "npm:^10.0.0"
     "@nestjs/schematics": "npm:^10.0.0"
+    "@nestjs/swagger": "npm:^7.2.0"
     "@nestjs/testing": "npm:^10.0.0"
     "@nestjs/typeorm": "npm:^10.0.1"
     "@types/bcrypt": "npm:^5.0.2"
