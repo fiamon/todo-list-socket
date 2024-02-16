@@ -1,16 +1,11 @@
-version: '3.1'
-
 services:
-  db:
-    image:  postgres
-    ports:
-      - "5432:5432"
+  postgres:
+    image: postgres
+    env_file:
+      - .env
     environment:
-      - POSTGRES_PASSWORD=todo1234
+      - POSTGRES_PASSWORD=postgres
+      - POSTGRES_USER=todo1234
       - POSTGRES_DB=todo-list-db
-    secrets:
-      - db_password
-
-secrets:
-  db_password:
-    file: db_password.txt
+    ports:
+      - 5432:5432

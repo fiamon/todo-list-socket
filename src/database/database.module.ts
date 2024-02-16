@@ -11,7 +11,7 @@ export const dataSourceOptions: DataSourceOptions = {
   host: 'localhost',
   port: 5432,
   username: 'postgres',
-  password: process.env.DB_PASSWORD,
+  password: 'todo1234',
   database: 'todo-list-db',
   uuidExtension: 'uuid-ossp',
   entities: [User, Board, Task],

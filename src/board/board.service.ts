@@ -62,9 +62,9 @@ export class BoardService {
         users: true,
       },
     });
-
     board.users = [...board.users, user];
     await this.boardRepository.save(board);
+
     sendMail(email);
   }
 
@@ -98,13 +98,14 @@ export class BoardService {
       where: { id: taskId },
       relations: {
         assigned_user_id: true,
+        assigned_board_id: true,
       },
     });
     task.status = status;
     await this.taskRepository.save(task);
-    console.log(task);
-    socketEvent(`updateTasks-${task.assigned_board_id}`, 'updateTask', {
-      task,
+    socketEvent(`updateTasks-${task.assigned_board_id.id}`, 'updateTask', {
+      task: task,
+      assignedBoard: task.assigned_board_id,
     });
     return task;
   }
